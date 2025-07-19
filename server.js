@@ -1,9 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const {  initDB } = require('./config/db.js'); // ✅ Fix this line
+const { initDB } = require('./config/db.js'); // ✅ Fix this line
 const rateLimiter = require('./middleware/rateLimiter.js');
 const transactionsRoute = require('./routes/transactionsRoute.js');
-import job from './config/cron.js';
+const job = require('./config/cron.js');
 
 dotenv.config();
 
