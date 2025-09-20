@@ -16,26 +16,27 @@ async function getTransactionsByUserId(req, res) {
 
 }
 
- async function createTransaction (req, res) {
-   
-try {
+async function createTransaction(req, res) {
+  try {
     const { user_id, title, amount, category } = req.body;
 
     if (!user_id || !title || !amount || !category) {
       return res.status(400).json({ error: 'All fields are required' });
     }
+
     const result = await sql`
-      INSERT INTO transaction (user_id, title, amount, category)
+      INSERT INTO "transaction" (user_id, title, amount, category)
       VALUES (${user_id}, ${title}, ${amount}, ${category})
       RETURNING *
     `;
+
     res.status(201).json(result[0]);
   } catch (error) {
-    console.error("Error creating transaction:", error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error creating transaction:", error.message);
+    res.status(500).json({ error: error.message }); // return actual error for debugging
   }
-
 }
+
 
  async function deleteTransaction(req, res) {
 
